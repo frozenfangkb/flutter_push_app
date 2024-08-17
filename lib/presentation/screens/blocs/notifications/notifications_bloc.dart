@@ -93,4 +93,12 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   void _onForegroundMessage() {
     FirebaseMessaging.onMessage.listen(_handleRemoteMessage);
   }
+
+  PushMessage? getMessageById(String id) {
+    final exist = state.notifications.any((element) => element.messageId == id);
+
+    if (!exist) return null;
+
+    return state.notifications.firstWhere((element) => element.messageId == id);
+  }
 }
